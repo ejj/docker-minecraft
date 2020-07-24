@@ -12,4 +12,4 @@ WORKDIR minecraft
 
 COPY --from=jar server.jar /
 
-Entrypoint ["/usr/bin/java", "-Xmx6G", "-jar", "/server.jar", "nogui"]
+Entrypoint ["sh", "-c", "/usr/bin/java -Xmx6G -jar /server.jar --nogui --universe /mnt/worlds --world $WORLD"]

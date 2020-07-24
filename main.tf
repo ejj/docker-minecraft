@@ -18,9 +18,7 @@ resource "google_container_cluster" "primary" {
   logging_service = "none"
   monitoring_service = "none"
 
-  cluster_autoscaling {
-    enabled = false
-  }
+  cluster_autoscaling { enabled = false }
 
   addons_config {
     http_load_balancing {
@@ -33,8 +31,8 @@ resource "google_container_cluster" "primary" {
   }
 
   node_config {
-    preemptible = true
-    machine_type = "e2-standard-2"
+    preemptible = false
+    machine_type = "n1-standard-2"
     disk_size_gb = 20
     metadata = {
        disable-legacy-endpoints = "true"

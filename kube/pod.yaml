@@ -14,7 +14,7 @@ spec:
     image: ethanj/minecraft-server
     resources:
       requests:
-        memory: "6G"
+        memory: "5G"
         cpu: "1500m"
     imagePullPolicy: Always
     volumeMounts:

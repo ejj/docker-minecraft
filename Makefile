@@ -6,7 +6,10 @@ up:
 	terraform apply -auto-approve
 	gcloud container clusters get-credentials minecraft
 	kubectl apply -f kube
+	kubectl get pods
 	sleep 45
+	kubectl get pods
+	kubectl logs minecraft
 	kubectl describe service minecraft | grep --color=never Ingress
 
 delete-pods:
@@ -16,4 +19,8 @@ down: delete-pods
 	terraform destroy -auto-approve
 
 get-ip:
+	kubectl describe service minecraft | grep --color=never Ingress
+
+mail-ip:
+
 	kubectl describe service minecraft | grep --color=never Ingress
