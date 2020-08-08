@@ -1,41 +1,41 @@
-# Specify the provider and access details
 
-locals {
-    port   = 25565
-    region = "us-west1-c"
+variable "do_token" {}
+
+variable "world" {
+  type = string
 }
 
-provider "google" {
-  credentials = file("~/.ejj_gcp_key.json")
-  project     = "ray-minecraft"
-  region      = local.region
+provider "digitalocean" {
+    token = var.do_token
 }
 
-resource "google_container_cluster" "primary" {
-  name               = "minecraft"
-  location           = local.region
-  initial_node_count = 1
-  logging_service = "none"
-  monitoring_service = "none"
 
-  cluster_autoscaling { enabled = false }
+resource "digitalocean_droplet" "mc" {
+    image = "67270127"
+    name = var.world
+    region = "sfo2"
+    size = "g-2vcpu-8gb"
+    ssh_keys = [ "8d:5b:c2:34:72:42:71:67:54:8e:69:4f:e0:d1:79:50" ]
+    user_data = <<EOF
+#!/bin/bash
+mkdir -p /mnt/worlds
 
-  addons_config {
-    http_load_balancing {
-      disabled = true
-    }
+#  Mount your volume at the newly-created mount point:
+mount -o discard,defaults,noatime /dev/disk/by-id/scsi-0DO_Volume_worlds /mnt/worlds
 
-    horizontal_pod_autoscaling {
-      disabled = true
-    }
-  }
+# Change fstab so the volume will be mounted after a reboot
+echo '/dev/disk/by-id/scsi-0DO_Volume_worlds /mnt/worlds ext4 defaults,nofail,discard 0 0' | sudo tee -a /etc/fstab
 
-  node_config {
-    preemptible = false
-    machine_type = "n1-standard-2"
-    disk_size_gb = 20
-    metadata = {
-       disable-legacy-endpoints = "true"
-    }
-  }
+/root/do-start.sh
+EOF
+}
+
+resource "digitalocean_floating_ip_assignment" "mc" {
+  droplet_id = digitalocean_droplet.mc.id
+  ip_address = "159.89.221.96"
+}
+
+resource "digitalocean_volume_attachment" "foobar" {
+  droplet_id = digitalocean_droplet.mc.id
+  volume_id  = "46ecdc64-cd33-11ea-bd4e-0a58ac1421a2"
 }
