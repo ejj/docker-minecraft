@@ -1,15 +1,10 @@
-FROM alpine as jar
-
-RUN wget https://launcher.mojang.com/v1/objects/a412fd69db1f81db3f511c1463fd304675244077/server.jar
-
 FROM ubuntu
 
-RUN apt-get update && apt-get install -y default-jre
+RUN apt-get update && apt-get install -y default-jre curl
 
 COPY minecraft/ /minecraft
+COPY entrypoint.sh /entrypoint.sh
 
 WORKDIR minecraft
 
-COPY --from=jar server.jar /
-
-Entrypoint ["sh", "-c", "/usr/bin/java -Xmx6G -jar /server.jar --nogui --universe /mnt/worlds --world $WORLD"]
+Entrypoint ["/entrypoint.sh"]
