@@ -11,7 +11,7 @@ provider "digitalocean" {
 
 
 resource "digitalocean_droplet" "mc" {
-    image = "67270127"
+    image = "70005320"
     name = var.world
     region = "sfo2"
     size = "g-2vcpu-8gb"
