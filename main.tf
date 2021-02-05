@@ -11,9 +11,9 @@ provider "digitalocean" {
 
 
 resource "digitalocean_droplet" "mc" {
-    image = "70005320"
+    image = "78211853"
     name = var.world
-    region = "sfo2"
+    region = "sfo3"
     size = "g-2vcpu-8gb"
     ssh_keys = [ "8d:5b:c2:34:72:42:71:67:54:8e:69:4f:e0:d1:79:50" ]
     user_data = <<EOF
@@ -32,10 +32,10 @@ EOF
 
 resource "digitalocean_floating_ip_assignment" "mc" {
   droplet_id = digitalocean_droplet.mc.id
-  ip_address = "159.89.221.96"
+  ip_address = "64.225.90.204"
 }
 
 resource "digitalocean_volume_attachment" "foobar" {
   droplet_id = digitalocean_droplet.mc.id
-  volume_id  = "46ecdc64-cd33-11ea-bd4e-0a58ac1421a2"
+  volume_id  = "13697785-67fd-11eb-82f8-0a58ac120185"
 }
