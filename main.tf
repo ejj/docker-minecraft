@@ -1,3 +1,10 @@
+terraform {
+  required_providers {
+    digitalocean = {
+      source = "digitalocean/digitalocean"
+    }
+  }
+}
 
 variable "do_token" {}
 
