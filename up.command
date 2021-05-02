@@ -7,8 +7,8 @@
 # https://console.cloud.google.com/networking/addresses/add?_ga=2.130731916.2021603281.1614471796-652477614.1612743698&project=ray-minecraft&folder=&organizationId=
 # gcloud compute addresses create minecraft --region us-west1
 
-USER=srwsnia@gmail.com
-#USER=ejj@ej2.org
+#USER=srwisnia@gmail.com
+USER=ejj@ej2.org
 PROJECT="ray-minecraft-306218"
 RAM=6144
 CPU=1
@@ -42,4 +42,3 @@ $GCLOUD compute instances create-with-container minecraft \
     --container-mount-disk=name=worlds,mount-path=/mnt/worlds \
     --machine-type=n1-custom-$CPU-$RAM \
     --address $IP
-$GCLOUD compute firewall-rules create minecraft --allow tcp:25565 || true

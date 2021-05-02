@@ -16,7 +16,6 @@ provider "digitalocean" {
     token = var.do_token
 }
 
-
 resource "digitalocean_droplet" "mc" {
     image = "78211853"
     name = var.world
