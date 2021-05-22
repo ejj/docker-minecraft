@@ -5,7 +5,7 @@ echo "Booting World ($WORLD)"
 URL="https://www.minecraft.net/en-us/download/server"
 if [[ "$WORLD" == *-snap ]]
 then
-    URL="https://www.minecraft.net/en-us/article/minecraft-snapshot-21w17a"
+    URL="https://www.minecraft.net/en-us/article/minecraft-snapshot-21w20a"
 fi
 
 echo $URL
